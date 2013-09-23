@@ -12,6 +12,7 @@
 # TODO:
 # Standaard pakketten analyseren en kijken aan welke pakketten we het meeste verkeer kwijt zijn.
 # Thread maken tijdens het binnenhalen van een pakketje.
+# Translating comments to english
 
 version = 0.1
 
