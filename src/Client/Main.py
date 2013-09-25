@@ -1,4 +1,12 @@
 #!/usr/bin/env python3
+
+# Todo:
+# Create a class terminal and add a getch method to retrieve a button pressed
+# Think of way to make the user interface modulair. Perhaps create a modulair menu, 
+#     for each menu item import a file and allow that file to write to the screen,
+#     MultiThreading/multiprocessing for tasks.
+#     
+
 import curses
 import time
 import subprocess
