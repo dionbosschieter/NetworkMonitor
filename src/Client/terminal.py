@@ -1,5 +1,9 @@
 import os
 env = os.environ
+
+def getch():
+    return 's'
+
 def ioctl_GWINSZ(fd):
     try:
         import fcntl, termios, struct, os

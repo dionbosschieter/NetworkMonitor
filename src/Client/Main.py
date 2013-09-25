@@ -5,32 +5,29 @@
 # Think of way to make the user interface modulair. Perhaps create a modulair menu, 
 #     for each menu item import a file and allow that file to write to the screen,
 #     MultiThreading/multiprocessing for tasks.
-#     
+# Use classess instead of global variables, they are dirty and only need to be used 
+#     for "real" GLOBAL variables, like a program state
 
 import curses
 import time
 import subprocess
 import sys
 
-import getch
 import terminal
 
 from multiprocessing import Process
 
-print(terminal.width)
-print(terminal.height)
-
 version = "0.1(beta)"
 author = ["Timo Dekker","Dion Bosschieter"]
-global win
-global name
 
 def sayName():
+    global name
     name = input("What is your name: ")
     #subprocess.call(["/usr/bin/say", "Welcome " + name])
 
 def drawWindow():
     global stdscr
+    global win
     stdscr = curses.initscr()
     win = curses.newwin(0,0,0,0)
     # Add the Border
@@ -43,12 +40,14 @@ def drawWindow():
     win.refresh()
     
 def drawName():
+    global win
+    global name
     win.addstr(2,1,name)
 
 def keyboardInterrupt():
     time.sleep(1)
     while(True):
-        c = getch.getch()
+        c = terminal.getch()
         if c == 's': drawName()
         elif c == 'q': exitSystem()
         #elif c == curses.KEY_HOME: x = y = 0
