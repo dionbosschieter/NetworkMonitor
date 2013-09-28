@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3                                      
 
 import curses
 import terminal
@@ -7,24 +7,23 @@ from curses import panel
 
 class Menu(object):                                                          
 
-    def __init__(self, items, stdscreen, title):
+    def __init__(self, items, stdscreen):
 
         #center the main_menu
         height = 10
         width = 20
-        x = int((terminal.width/2) - (width/2))
-        y = int((terminal.height/2) - (height/2))
-        self.title = title
+        x = (terminal.width/2) - (width/2)
+        y = (terminal.height/2) - (height/2)
 
-        self.window = stdscreen.subwin(height,width,y,x)
-        self.window.keypad(1)                            
+        self.window = stdscreen.subwin(height,width,int(y),int(x))
+        self.window.keypad(1)
         self.panel = panel.new_panel(self.window)
         self.panel.hide()                                                    
         panel.update_panels()
 
         self.position = 0                                                    
         self.items = items                                                   
-        self.items.append(('Close','exit'))
+        self.items.append(('exit','exit'))
 
     def navigate(self, n):                                                   
         self.position += n                                                   
@@ -38,7 +37,7 @@ class Menu(object):
         self.panel.show()                                                    
         self.window.clear()
         self.window.border(0)
-        self.window.addstr(0,1,self.title)
+        self.window.addstr(0,1,"Main menu")
 
         while True:                                                          
             self.window.refresh()                                            
@@ -57,7 +56,7 @@ class Menu(object):
 
             if key in [curses.KEY_ENTER, ord('\n')]:                         
                 if self.position == len(self.items)-1:
-                    break
+                    break                                                    
                 else:                                                        
                     self.items[self.position][1]()                           
 
@@ -97,15 +96,14 @@ class NetworkMonitor(object):
                 ('beep', curses.beep),
                 ('flash', curses.flash)
                 ]
-        submenu = Menu(submenu_items, self.screen, "Submenu")
+        submenu = Menu(submenu_items, self.screen)
 
         main_menu_items = [
-                ('Connect...', curses.beep),
-                ('Disconnect...', curses.flash),
-                ('Submenu', submenu.display),
-                ('Exit', exit)
+                ('beep', curses.beep),
+                ('flash', curses.flash),
+                ('submenu', submenu.display)
                 ]
-        main_menu = Menu(main_menu_items, self.screen, "Main menu")
+        main_menu = Menu(main_menu_items, self.screen)
         main_window.display()
         
         #listen for keypressess
