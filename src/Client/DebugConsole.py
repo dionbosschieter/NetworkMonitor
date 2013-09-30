@@ -2,15 +2,14 @@ import terminal
 import curses
 from curses import panel
 
-class InfoContainer(object):
+class DebugConsole(object):
 
-    def __init__(self, stdscreen, title, debug_console):
-        self.debug_console = debug_console
+    def __init__(self, stdscreen, title):
         self.height = int(terminal.height/2)
         self.width = terminal.width - 2
         self.title = title
 
-        self.window = stdscreen.subwin(self.height,self.width,1,1)
+        self.window = stdscreen.subwin(self.height-1,self.width,self.height+1,1)
         self.window.border(0)
         self.window.addstr(0,1,title)
         self.panel = panel.new_panel(self.window)
@@ -30,13 +29,11 @@ class InfoContainer(object):
         panel.update_panels()
         curses.doupdate()
 
-    def addPacket(self, packet):
-        self.debug_console.log("Recieved packet to print")
-        
+    def log(self, logitem):
         self.window.border(0)
         self.window.addstr(0,1,self.title)
         if(self.currentLine < (self.height-1)):
-            self.window.addstr(self.currentLine,1,packet)
+            self.window.addstr(self.currentLine,1,logitem)
             self.window.refresh()
             curses.doupdate()
             self.currentLine += 1

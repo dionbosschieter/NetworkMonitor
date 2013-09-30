@@ -7,6 +7,7 @@ from curses import panel
 from Menu import Menu
 from Window import Window
 from InfoContainer import InfoContainer
+from DebugConsole import DebugConsole
 
 class NetworkMonitor(object):
 
@@ -16,14 +17,15 @@ class NetworkMonitor(object):
 
         title = "Network Monitor - Dion Bosschieter, Timo Dekker - Version: 0.1"
 
+        debug_console = DebugConsole(self.screen, "Debugging information")
         main_window = Window(title, self.screen)
-        info_container = InfoContainer(self.screen, "Netwerk info")
+        info_container = InfoContainer(self.screen, "Netwerk info", debug_console)
 
         submenu_items = [
                 ('beep', curses.beep),
                 ('flash', curses.flash)
                 ]
-        submenu = Menu(submenu_items, self.screen, "Submenu")
+        submenu = Menu(submenu_items, self.screen, "Submenu", debug_console)
 
         main_menu_items = [
                 ('Connect...', curses.beep),
@@ -31,10 +33,14 @@ class NetworkMonitor(object):
                 ('Submenu', submenu.display),
                 ('Exit', exit)
                 ]
-        main_menu = Menu(main_menu_items, self.screen, "Main menu")
+        main_menu = Menu(main_menu_items, self.screen, "Main menu", debug_console)
         
         main_window.display()
         info_container.display()
+        debug_console.display()
+        debug_console.log("Logging initialized")
+        debug_console.log("Network Monitor has started")
+        
         
         #listen for keypressess
         while(True):

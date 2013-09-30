@@ -4,8 +4,8 @@ from curses import panel
 
 class Menu(object):
 
-    def __init__(self, items, stdscreen, title):
-        #curses.curs_set(0)
+    def __init__(self, items, stdscreen, title, debug_console):
+        self.debug_console = debug_console
 
         #center the main_menu
         height = 10
@@ -37,6 +37,8 @@ class Menu(object):
         self.window.clear()
         self.window.border(0)
         self.window.addstr(0,1,self.title)
+
+        self.debug_console.log("Menu has been printed")
 
         while True:
             self.window.refresh()
