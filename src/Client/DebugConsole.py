@@ -29,6 +29,11 @@ class DebugConsole(object):
         panel.update_panels()
         curses.doupdate()
 
+    def refresh(self):
+        self.window.border(0)
+        self.window.addstr(0,1,self.title)
+        self.window.refresh()
+
     def log(self, logitem):
         self.window.border(0)
         self.window.addstr(0,1,self.title)

@@ -24,6 +24,11 @@ class InfoContainer(object):
         self.panel.show()
         #self.window.clear()
 
+    def refresh(self):
+        self.window.border(0)
+        self.window.addstr(0,1,self.title)
+        self.window.refresh()
+
     def hide(self):
         self.window.clear()
         self.panel.hide()

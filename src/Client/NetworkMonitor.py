@@ -25,7 +25,7 @@ class NetworkMonitor(object):
                 ('beep', curses.beep),
                 ('flash', curses.flash)
                 ]
-        submenu = Menu(submenu_items, self.screen, "Submenu", debug_console)
+        submenu = Menu(submenu_items, self.screen, "Submenu", debug_console, info_container)
 
         main_menu_items = [
                 ('Connect...', curses.beep),
@@ -33,7 +33,7 @@ class NetworkMonitor(object):
                 ('Submenu', submenu.display),
                 ('Exit', exit)
                 ]
-        main_menu = Menu(main_menu_items, self.screen, "Main menu", debug_console)
+        main_menu = Menu(main_menu_items, self.screen, "Main menu", debug_console, info_container)
         
         main_window.display()
         info_container.display()
