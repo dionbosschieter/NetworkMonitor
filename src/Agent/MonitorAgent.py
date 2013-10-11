@@ -16,9 +16,9 @@ class MyService(rpyc.Service):
         pass
 
     def exposed_get_answer(self): # this is an exposed method
-        return 42
+        return "timo STINKt"
 
-    def get_question(self):  # while this method is not exposed
+    def exposed_get_question(self):  # while this method is not exposed
         return "what is the airspeed velocity of an unladen swallow?"
 
 if __name__ == "__main__":
