@@ -62,8 +62,7 @@ def print_packet(pktlen, data, timestamp):
         if decoded['dstportnum'] in protocollen:
             type = protocollen[decoded['dstportnum']]
 
-
-        print ('%s.%f %s > %s %s %s %s %s' % (time.strftime('%H:%M',
+        """print ('%s.%f %s > %s %s %s %s %s' % (time.strftime('%H:%M',
                                 time.localtime(timestamp)),
                                 timestamp % 60,
                                 decoded['source_address'],
@@ -72,8 +71,25 @@ def print_packet(pktlen, data, timestamp):
                                 decoded['dstportnum'],
                                 protocols[decoded['protocol']],
                                 type))
+        """
+        
+        query = "INSERT INTO packets (version,header_len,tos,total_len,ttl,protocol,src_port,dst_port,src_ip,dst_ip)"
+        query+= " VALUES ("
+        query+= str(decoded['version'])+","
+        query+= str(decoded['header_len'])+","
+        query+= str(decoded['tos'])+","
+        query+= str(decoded['total_len'])+","
+        query+= str(decoded['ttl'])+",'"
 
-        cur.execute("INSERT INTO packets (version) VALUES (4)")
+        if type: query+= type+"',"
+        else: query+= protocols[decoded['protocol']]+"',"
+        
+        query+= str(decoded['srcportnum'])+","
+        query+= str(decoded['dstportnum'])+",'"
+        query+= decoded['source_address']+"','"
+        query+= decoded['destination_address']+ "')"
+
+        cur.execute(query)
         conn.commit()
 
 def StartSniffer():
