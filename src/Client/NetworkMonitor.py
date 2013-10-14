@@ -42,6 +42,7 @@ class NetworkMonitor(object):
         debug_console.log("Network Monitor has started")
         
         
+        
         #listen for keypressess
         while(True):
             c = terminal.getch()
