@@ -37,7 +37,13 @@ class DebugConsole(object):
     def log(self, logitem):
         self.window.border(0)
         self.window.addstr(0,1,self.title)
-        if(self.currentLine < (self.height-1)):
+
+        if(self.currentLine == (self.height-2)):
+            self.currentLine = 1
+            self.window.clear()
+            self.refresh()
+
+        if(self.currentLine < (self.height-2)):
             self.window.addstr(self.currentLine,1,logitem)
             self.window.refresh()
             curses.doupdate()

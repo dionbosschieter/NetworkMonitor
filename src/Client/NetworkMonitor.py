@@ -8,6 +8,7 @@ from Menu import Menu
 from Window import Window
 from InfoContainer import InfoContainer
 from DebugConsole import DebugConsole
+from GatherInformation import GatherInformation
 
 class NetworkMonitor(object):
 
@@ -20,6 +21,7 @@ class NetworkMonitor(object):
         debug_console = DebugConsole(self.screen, "Debugging information")
         main_window = Window(title, self.screen)
         info_container = InfoContainer(self.screen, "Netwerk info", debug_console)
+        gather_information = GatherInformation(info_container, debug_console, "10.3.37.50")
 
         submenu_items = [
                 ('beep', curses.beep),
@@ -41,14 +43,15 @@ class NetworkMonitor(object):
         debug_console.log("Logging initialized")
         debug_console.log("Network Monitor has started")
         
-        
-        
         #listen for keypressess
         while(True):
             c = terminal.getch()
             if c == 'q': break
             elif c == 'h': main_menu.display()
-            elif c == 'p': info_container.addPacket("ICMP naar 8.8.8.8")
+            elif c == 'p': gather_information.getPackets()
+            elif c == 'c': gather_information.connect()
+            elif c == 'd': gather_information.disconnect()
+            
         #system quit()
 
 if __name__ == '__main__':

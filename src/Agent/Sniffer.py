@@ -4,9 +4,8 @@ import pcap
 import time
 import socket
 import struct
-import Protocol
-import rpyc
 import pymysql
+import Protocol
 from multiprocessing import Process
 from rpyc.utils.server import ThreadedServer
 
