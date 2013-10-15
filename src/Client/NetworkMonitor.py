@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 
 import curses
+import time
 import terminal
-import subprocess
+from threading import *
 from curses import panel
 from Menu import Menu
 from Window import Window
@@ -11,6 +12,15 @@ from DebugConsole import DebugConsole
 from GatherInformation import GatherInformation
 
 class NetworkMonitor(object):
+
+    def updateScreens(self, debug_console, info_container, main_menu):
+        while(True):
+            if(self.threadstop == 1):
+                break
+            debug_console.refresh()
+            info_container.refresh()
+            time.sleep(1)
+            #main_menu.refresh()
 
     def __init__(self, stdscreen):
         self.screen = stdscreen
@@ -43,11 +53,25 @@ class NetworkMonitor(object):
         debug_console.log("Logging initialized")
         debug_console.log("Network Monitor has started")
         
+        self.threadstop = 0
+
+        #create refresh deamon
+        update_screens = Thread(target=self.updateScreens, args=(debug_console,info_container, main_menu))
+        update_screens.daemon = True
+        update_screens.start()
+
         #listen for keypressess
         while(True):
             c = terminal.getch()
             if c == 'q': break
-            elif c == 'h': main_menu.display()
+            elif c == 'h':
+                self.threadstop = 1
+                main_menu.display()
+                self.threadstop = 0
+                update_screens = Thread(target=self.updateScreens, args=(debug_console,info_container, main_menu))
+                update_screens.daemon = True
+                update_screens.start()
+
             elif c == 'p': gather_information.getPackets()
             elif c == 'c': gather_information.connect()
             elif c == 'd': gather_information.disconnect()

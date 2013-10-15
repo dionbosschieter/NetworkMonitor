@@ -1,5 +1,6 @@
 import terminal
 import curses
+import time
 from curses import panel
 
 class DebugConsole(object):
@@ -16,7 +17,8 @@ class DebugConsole(object):
         self.panel.hide()
         panel.update_panels()
         # Add the Border
-        self.currentLine = 1
+        self.second = time.time()
+        self.writebuffer = []
 
     def display(self):
         self.panel.top()
@@ -30,21 +32,35 @@ class DebugConsole(object):
         curses.doupdate()
 
     def refresh(self):
+        self.window.clear()
         self.window.border(0)
         self.window.addstr(0,1,self.title)
+        #draw the last 20 log items
+        #foreach i from 0 till (self.height-2) 
+        #draw string on i place
+        #self.writebuffer[-(self.height-2):]
+        
+        maxlength = (self.height-3)
+        lengthofbuffer = len(self.writebuffer)
+        if(lengthofbuffer>maxlength):
+            startindex = (lengthofbuffer-1)-maxlength
+        else:
+            startindex = 0
+            maxlength = lengthofbuffer
+
+        for i in range(0, maxlength):
+            #self.window.addstr(i,1,str(i))
+            self.window.addstr(i+1,1,self.writebuffer[i+startindex])
+
         self.window.refresh()
-
+        curses.doupdate()
+        
     def log(self, logitem):
-        self.window.border(0)
-        self.window.addstr(0,1,self.title)
 
-        if(self.currentLine == (self.height-2)):
-            self.currentLine = 1
-            self.window.clear()
-            self.refresh()
+        #1 refresh per second// or 2?
+        if(time.time() - self.second >= 0):
+            self.writebuffer.append(logitem)
+            self.second = time.time()
+        else:
+            self.writebuffer.append(logitem)
 
-        if(self.currentLine < (self.height-2)):
-            self.window.addstr(self.currentLine,1,logitem)
-            self.window.refresh()
-            curses.doupdate()
-            self.currentLine += 1

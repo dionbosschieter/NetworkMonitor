@@ -32,6 +32,21 @@ class Menu(object):
         elif self.position >= len(self.items):
             self.position = len(self.items)-1
 
+    def refresh(self):
+        self.window.refresh()
+        curses.doupdate()
+        self.window.border(0)
+        self.window.addstr(0,1,self.title)
+
+        for index, item in enumerate(self.items):
+            if index == self.position:
+                mode = curses.A_REVERSE
+            else:
+                mode = curses.A_NORMAL
+
+            msg = '%d. %s' % (index, item[0])
+            self.window.addstr(1+index, 1, msg, mode)
+
     def display(self):
         self.panel.top()
         self.panel.show()
@@ -44,17 +59,7 @@ class Menu(object):
         self.window.addstr(0,1,self.title)
 
         while True:
-            self.window.refresh()
-            curses.doupdate()
-            for index, item in enumerate(self.items):
-                if index == self.position:
-                    mode = curses.A_REVERSE
-                else:
-                    mode = curses.A_NORMAL
-
-                msg = '%d. %s' % (index, item[0])
-                self.window.addstr(1+index, 1, msg, mode)
-                
+            self.refresh()
         
             key = self.window.getch()
 
@@ -73,9 +78,5 @@ class Menu(object):
         self.window.clear()
         self.panel.hide()
 
-        #redraw lines
-        self.debug_console.refresh()
-        self.info_container.refresh()
-        
         panel.update_panels()
         curses.doupdate()
