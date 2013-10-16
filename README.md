@@ -17,3 +17,6 @@ We've used the following libaries:
 Cursus: To make the client user interface
 PyMySQL: Mysql client for python
 PyLibPcap-0.6.4: To sniff the packets
+
+It's a school project so don't expect many changes;)
+
