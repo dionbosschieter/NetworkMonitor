@@ -23,15 +23,6 @@ It's a school project so don't expect many changes;)
 
 Example DB sql code, before you run this, create new database with name: networkmonitor
 
--- phpMyAdmin SQL Dump
--- version 4.0.4.1
--- http://www.phpmyadmin.net
---
--- Machine: localhost
--- Genereertijd: 16 okt 2013 om 12:36
--- Serverversie: 5.6.12
--- PHP-versie: 5.5.3
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -42,13 +33,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Databank: `networkmonitor`
+-- Database: `networkmonitor`
 --
 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `packets`
+-- Structure for tabel `packets`
 --
 
 CREATE TABLE IF NOT EXISTS `packets` (
