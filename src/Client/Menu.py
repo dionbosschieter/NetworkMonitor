@@ -10,7 +10,7 @@ class Menu(object):
 
         #center the main_menu
         height = 10
-        width = 20
+        width = 30
         x = int((terminal.width/2) - (width/2))
         y = int((terminal.height/2) - (height/2))
         self.title = title
@@ -51,8 +51,6 @@ class Menu(object):
         self.panel.top()
         self.panel.show()
 
-        self.debug_console.log("Menu has been printed")
-
         self.window.clear()
 
         self.window.border(0)
@@ -68,6 +66,7 @@ class Menu(object):
                     break
                 else:
                     self.items[self.position][1]()
+                    break
 
             elif key == curses.KEY_UP:
                 self.navigate(-1)

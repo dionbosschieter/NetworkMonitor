@@ -12,9 +12,9 @@ from rpyc.utils.server import ThreadedServer
 protocollen = Protocol.protocollen
 protocols= Protocol.protocols
 
+#change these values
 conn = pymysql.connect(host='127.0.0.1', user='root', passwd='woensdag25!', db='networkmonitor')
 cur = conn.cursor()
-
 
 if sys.version_info[0] > 2:
     IPPROTO = bytes ((0x08, 0x00))

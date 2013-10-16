@@ -59,8 +59,8 @@ class InfoContainer(object):
     def addPacket(self, packet):
         #1 refresh per second// or 2?
         if(time.time() - self.second >= 1):
-            self.writebuffer.append(logitem)
+            self.writebuffer.append(packet)
             self.second = time.time()
         else:
-            self.writebuffer.append(logitem)
+            self.writebuffer.append(packet)
 

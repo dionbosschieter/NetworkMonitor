@@ -19,7 +19,7 @@ class NetworkMonitor(object):
                 break
             debug_console.refresh()
             info_container.refresh()
-            time.sleep(1)
+            time.sleep(0.5)
             #main_menu.refresh()
 
     def __init__(self, stdscreen):
@@ -33,16 +33,9 @@ class NetworkMonitor(object):
         info_container = InfoContainer(self.screen, "Netwerk info", debug_console)
         gather_information = GatherInformation(info_container, debug_console, "10.3.37.50")
 
-        submenu_items = [
-                ('beep', curses.beep),
-                ('flash', curses.flash)
-                ]
-        submenu = Menu(submenu_items, self.screen, "Submenu", debug_console, info_container)
-
         main_menu_items = [
-                ('Connect...', curses.beep),
-                ('Disconnect...', curses.flash),
-                ('Submenu', submenu.display),
+                ('Connect/Disconnect', gather_information.toggleconnect),
+                ('Gather packets', gather_information.getPackets),
                 ('Exit', exit)
                 ]
         main_menu = Menu(main_menu_items, self.screen, "Main menu", debug_console, info_container)
@@ -52,6 +45,10 @@ class NetworkMonitor(object):
         debug_console.display()
         debug_console.log("Logging initialized")
         debug_console.log("Network Monitor has started")
+        debug_console.log("")
+        debug_console.log("Usage:")
+        debug_console.log("Press 'q' to quit, 'h' for the menu, 'p' to import newest packets, 'c' to connect and 'd' to disconnect")
+        
         
         self.threadstop = 0
 
