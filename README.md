@@ -12,6 +12,9 @@ The agent captures all the packets on eth0. You can edit the network interface. 
 
 The client can also run on every computer with python3 installed. It connect's to the mysql database and reads the packets. 
 
+![screenshot client](https://raw.github.com/dionbosschieter/NetworkMonitor/master/ScreenShot.png)
+
+
 We've used the following libaries:
 
 Cursus: To make the client user interface
