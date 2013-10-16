@@ -39,7 +39,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure for tabel `packets`
+-- Structure for table `packets`
 --
 
 CREATE TABLE IF NOT EXISTS `packets` (
